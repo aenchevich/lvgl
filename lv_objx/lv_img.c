@@ -140,38 +140,44 @@ void lv_img_set_src(lv_obj_t * img, const void * src_img)
     }
 #if USE_LV_FILESYSTEM
     else if(src_type == LV_IMG_SRC_FILE) {
-        lv_fs_file_t file;
-        lv_fs_res_t res;
-        lv_img_t img_file_data;
-        uint32_t rn;
-        res = lv_fs_open(&file, src_img, LV_FS_MODE_RD);
-        if(res == LV_FS_RES_OK) {
-            res = lv_fs_read(&file, &img_file_data, sizeof(img_file_data), &rn);
-        }
+    		ext->w = 280;
+    		ext->h = 210;
+    		ext->chroma_keyed = 0;
+    		ext->alpha_byte = 1;
+    		ext->src = "P:test.png";
 
-        /*Create a dummy header on fs error*/
-        if(res != LV_FS_RES_OK || rn != sizeof(img_file_data)) {
-            img_file_data.header.w = lv_obj_get_width(img);
-            img_file_data.header.h = lv_obj_get_height(img);
-            img_file_data.header.chroma_keyed = 0;
-            img_file_data.header.alpha_byte = 0;
-        }
-
-        lv_fs_close(&file);
-
-        ext->w = img_file_data.header.w;
-        ext->h = img_file_data.header.h;
-        ext->chroma_keyed = img_file_data.header.chroma_keyed;
-        ext->alpha_byte = img_file_data.header.alpha_byte;
-
-        /* If the new and the old src are the same then it was only a refresh.*/
-        if(ext->src != src_img) {
-            lv_mem_free(ext->src);
-            char * new_fn = lv_mem_alloc(strlen(src_img) + 1);
-            strcpy(new_fn, src_img);
-            ext->src = new_fn;
-
-        }
+//        lv_fs_file_t file;
+//        lv_fs_res_t res;
+//        lv_img_t img_file_data;
+//        uint32_t rn;
+//        res = lv_fs_open(&file, src_img, LV_FS_MODE_RD);
+//        if(res == LV_FS_RES_OK) {
+//            res = lv_fs_read(&file, &img_file_data, sizeof(img_file_data), &rn);
+//        }
+//
+//        /*Create a dummy header on fs error*/
+//        if(res != LV_FS_RES_OK || rn != sizeof(img_file_data)) {
+//            img_file_data.header.w = lv_obj_get_width(img);
+//            img_file_data.header.h = lv_obj_get_height(img);
+//            img_file_data.header.chroma_keyed = 0;
+//            img_file_data.header.alpha_byte = 0;
+//        }
+//
+//        lv_fs_close(&file);
+//
+//        ext->w = img_file_data.header.w;
+//        ext->h = img_file_data.header.h;
+//        ext->chroma_keyed = img_file_data.header.chroma_keyed;
+//        ext->alpha_byte = img_file_data.header.alpha_byte;
+//
+//        /* If the new and the old src are the same then it was only a refresh.*/
+//        if(ext->src != src_img) {
+//            lv_mem_free(ext->src);
+//            char * new_fn = lv_mem_alloc(strlen(src_img) + 1);
+//            strcpy(new_fn, src_img);
+//            ext->src = new_fn;
+//
+//        }
     }
 #endif
     else if(src_type == LV_IMG_SRC_SYMBOL) {

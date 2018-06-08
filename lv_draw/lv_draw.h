@@ -59,6 +59,7 @@ typedef enum {
     LV_IMG_FORMAT_FILE_RAW_RGB332,    /*8 bit*/
     LV_IMG_FORMAT_FILE_RAW_RGB565,    /*16 bit*/
     LV_IMG_FORMAT_FILE_RAW_RGB888,    /*24 bit (stored on 32 bit)*/
+    LV_IMG_FORMAT_FILE_PNG,    		  /*A PNG file*/
 }lv_img_format_t;
 
 
