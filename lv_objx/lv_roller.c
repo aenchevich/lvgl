@@ -337,10 +337,8 @@ static lv_res_t lv_roller_signal(lv_obj_t * roller, lv_signal_t sign, void * par
 
     lv_roller_ext_t * ext = lv_obj_get_ext_attr(roller);
     lv_align_t obj_align = LV_ALIGN_IN_LEFT_MID;
-
-    {
+    if(ext->ddlist.label) {
         lv_label_align_t label_align = lv_label_get_align(ext->ddlist.label);
-
         if(LV_LABEL_ALIGN_CENTER == label_align) obj_align = LV_ALIGN_CENTER;
         else if(LV_LABEL_ALIGN_RIGHT == label_align) obj_align = LV_ALIGN_IN_RIGHT_MID;
     }
@@ -555,7 +553,7 @@ static void refr_position(lv_obj_t * roller, bool anim_en)
     anim_en = false;
 #endif
     lv_roller_ext_t * ext = lv_obj_get_ext_attr(roller);
-    if(ext->ddlist.label == NULL) return;	/*Probably the roller is being deleted if the label is NULL.*/
+    if(ext->ddlist.label == NULL) return;   /*Probably the roller is being deleted if the label is NULL.*/
 
     lv_obj_t * roller_scrl = lv_page_get_scrl(roller);
     lv_style_t * style_label = lv_obj_get_style(ext->ddlist.label);
