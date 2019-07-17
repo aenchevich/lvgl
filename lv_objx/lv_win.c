@@ -107,7 +107,6 @@ lv_obj_t * lv_win_create(lv_obj_t * par, const lv_obj_t * copy)
         }
 
         lv_obj_set_signal_func(new_win, lv_win_signal);
-        lv_obj_set_size(new_win, LV_HOR_RES, LV_VER_RES);
     }
     /*Copy an existing object*/
     else {
@@ -263,7 +262,7 @@ void lv_win_set_style(lv_obj_t * win, lv_win_style_t type, lv_style_t * style)
     switch(type) {
         case LV_WIN_STYLE_BG:
             lv_obj_set_style(win, style);
-            lv_win_realign(win);
+
             break;
         case LV_WIN_STYLE_CONTENT_BG:
             lv_page_set_style(ext->page, LV_PAGE_STYLE_BG, style);
@@ -276,7 +275,6 @@ void lv_win_set_style(lv_obj_t * win, lv_win_style_t type, lv_style_t * style)
             break;
         case LV_WIN_STYLE_HEADER:
             lv_obj_set_style(ext->header, style);
-            lv_win_realign(win);
             break;
         case LV_WIN_STYLE_BTN_REL:
             ext->style_btn_rel = style;
@@ -292,8 +290,7 @@ void lv_win_set_style(lv_obj_t * win, lv_win_style_t type, lv_style_t * style)
         btn = lv_obj_get_child_back(ext->header, NULL);
         btn = lv_obj_get_child_back(ext->header, btn);    /*Skip the title*/
         while(btn != NULL) {
-            if(type == LV_WIN_STYLE_BTN_REL) lv_btn_set_style(btn, LV_BTN_STYLE_REL, style);
-            else lv_btn_set_style(btn, LV_BTN_STYLE_PR, style);
+            lv_btn_set_style(btn, type, style);
             btn = lv_obj_get_child_back(ext->header, btn);
         }
     }
@@ -538,14 +535,17 @@ static void lv_win_realign(lv_obj_t * win)
         btn = lv_obj_get_child_back(ext->header, btn);
     }
 
-
+    /*Position the header and align the title inside of it*/
+    lv_obj_set_pos(ext->header, 0, 0);
     lv_obj_align(ext->title, NULL, LV_ALIGN_IN_LEFT_MID, ext->style_header->body.padding.hor, 0);
 
-    lv_obj_set_pos(ext->header, 0, 0);
-
+    /*Set size of the window workarea (page + scrollable bgnd) taking into account the size of the header*/
     lv_obj_set_size(ext->page, lv_obj_get_width(win), lv_obj_get_height(win) - lv_obj_get_height(ext->header));
+    lv_obj_t * scrl = lv_page_get_scrl(ext->page);
+    lv_style_t * scrl_style = lv_obj_get_style(scrl);
+    lv_obj_set_width(scrl, lv_obj_get_width(ext->page) - 2 * scrl_style->body.padding.hor);
+    lv_obj_set_height(scrl, lv_obj_get_height(ext->page) - 2 * scrl_style->body.padding.ver);
     lv_obj_align(ext->page, ext->header, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
 }
 
 #endif
-

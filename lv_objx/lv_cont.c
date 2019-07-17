@@ -62,8 +62,6 @@ static lv_signal_func_t ancestor_signal;
  */
 lv_obj_t * lv_cont_create(lv_obj_t * par, const lv_obj_t * copy)
 {
-
-
     LV_LOG_TRACE("container create started");
 
     /*Create a basic object*/
@@ -71,6 +69,7 @@ lv_obj_t * lv_cont_create(lv_obj_t * par, const lv_obj_t * copy)
     lv_mem_assert(new_cont);
     if(new_cont == NULL) return NULL;
 
+    if(par) lv_obj_set_size(new_cont, lv_obj_get_width(par), lv_obj_get_height(par));
     if(ancestor_signal == NULL) ancestor_signal = lv_obj_get_signal_func(new_cont);
 
     lv_obj_allocate_ext_attr(new_cont, sizeof(lv_cont_ext_t));
@@ -106,7 +105,6 @@ lv_obj_t * lv_cont_create(lv_obj_t * par, const lv_obj_t * copy)
     }
 
     LV_LOG_INFO("container created");
-
 
     return new_cont;
 }
