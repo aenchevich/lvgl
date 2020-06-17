@@ -177,7 +177,10 @@ void lv_chart_clear_serie(lv_obj_t * chart, lv_chart_series_t * serie)
     lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
     if(ext == NULL)
         return;
-    for(uint32_t i = 0; i < ext->point_cnt; i++)
+
+    uint32_t i;
+
+    for(i = 0; i < ext->point_cnt; i++)
     {
         serie->points[i] = LV_CHART_POINT_DEF;
     }
