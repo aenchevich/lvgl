@@ -103,7 +103,6 @@ lv_obj_t * lv_page_create(lv_obj_t * par, const lv_obj_t * copy)
         lv_obj_set_drag(ext->scrl, true);
         lv_obj_set_drag_throw(ext->scrl, true);
         lv_obj_set_protect(ext->scrl, LV_PROTECT_PARENT | LV_PROTECT_PRESS_LOST);
-        lv_cont_set_fit(ext->scrl, false, true);
 
         /* Add the signal function only if 'scrolling' is created
          * because everything has to be ready before any signal is received*/
@@ -139,7 +138,6 @@ lv_obj_t * lv_page_create(lv_obj_t * par, const lv_obj_t * copy)
         lv_page_set_rel_action(new_page, copy_ext->rel_action);
         lv_page_set_sb_mode(new_page, copy_ext->sb.mode);
         lv_page_set_arrow_scroll(new_page, copy_ext->arrow_scroll);
-
 
         lv_page_set_style(new_page, LV_PAGE_STYLE_BG, lv_page_get_style(copy, LV_PAGE_STYLE_BG));
         lv_page_set_style(new_page, LV_PAGE_STYLE_SCRL, lv_page_get_style(copy, LV_PAGE_STYLE_SCRL));
