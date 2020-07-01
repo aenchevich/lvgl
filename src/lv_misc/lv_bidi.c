@@ -167,7 +167,8 @@ uint16_t lv_bidi_get_visual_pos(const char * str_in, char **bidi_txt, uint16_t l
     if (bidi_txt) *bidi_txt = buf;
     uint16_t *pos_conv_buf = (uint16_t*) ((char*)buf + txt_buf_size);
     lv_bidi_process_paragraph(str_in, bidi_txt? *bidi_txt: NULL, len, base_dir, pos_conv_buf, pos_conv_len);
-    for (uint16_t i = 0; i < pos_conv_len; i++){
+    uint16_t i;
+    for(i = 0; i < pos_conv_len; i++){
         if (GET_POS(pos_conv_buf[i]) == logical_pos){
             if (is_rtl) *is_rtl = IS_RTL_POS(pos_conv_buf[i]);
             return i;
@@ -294,12 +295,14 @@ static uint32_t get_txt_len(const char * txt, uint32_t max_len)
 
 static void fill_pos_conv(uint16_t * out, uint16_t len, uint16_t index)
 {
-    for (uint16_t i = 0; i < len; i++)
+    uint16_t i;
+
+    for(i = 0; i < len; i++)
     {
         out[i] = SET_RTL_POS(index, false);
         index++;
     }
-} 
+}
 
 static lv_bidi_dir_t get_next_run(const char * txt, lv_bidi_dir_t base_dir, uint32_t max_len, uint32_t * len, uint16_t  * pos_conv_len)
 {
@@ -421,7 +424,7 @@ static void rtl_reverse(char * dest, const char * src, uint32_t len, uint16_t *p
             }
 
             if (dest) memcpy(&dest[wr], &src[first_weak], last_weak - first_weak + 1);
-            if (pos_conv_out) fill_pos_conv(&pos_conv_out[pos_conv_wr], pos_conv_last_weak - pos_conv_first_weak + 1, pos_conv_rd_base + pos_conv_first_weak); 
+            if (pos_conv_out) fill_pos_conv(&pos_conv_out[pos_conv_wr], pos_conv_last_weak - pos_conv_first_weak + 1, pos_conv_rd_base + pos_conv_first_weak);
             wr += last_weak - first_weak + 1;
             pos_conv_wr += pos_conv_last_weak - pos_conv_first_weak + 1;
         }

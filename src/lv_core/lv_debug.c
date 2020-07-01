@@ -57,7 +57,7 @@ bool lv_debug_check_obj_type(const lv_obj_t * obj, const char * obj_type)
     lv_obj_get_type((lv_obj_t *)obj, &types);
 
     uint8_t i;
-    for(i = 0; i < LV_MAX_ANCESTOR_NUM; i++) {
+    for(i = 0; i < LV_MAX_ANCESTOR_NUM && types.type[i]; i++) {
         if(strcmp(types.type[i], obj_type) == 0) return true;
     }
 
@@ -190,4 +190,3 @@ static bool obj_valid_child(const lv_obj_t * parent, const lv_obj_t * obj_to_fin
 }
 
 #endif /*LV_USE_DEBUG*/
-

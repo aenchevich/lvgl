@@ -331,6 +331,10 @@ void lv_disp_pop_from_inv_buf(lv_disp_t * disp, uint16_t num)
  */
 bool lv_disp_is_double_buf(lv_disp_t * disp)
 {
+    LV_ASSERT_MEM(disp);
+    LV_ASSERT_MEM(disp->driver.buffer);
+    LV_ASSERT_MEM(disp->driver.buffer->buf1);
+
     if(disp->driver.buffer->buf1 && disp->driver.buffer->buf2)
         return true;
     else
